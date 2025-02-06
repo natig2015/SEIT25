@@ -1,5 +1,6 @@
 package io.cucumber.glue;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -16,6 +17,7 @@ import io.cucumber.pages.HomePageElements;
 import io.cucumber.pages.SortableDataTableElements;
 
 public class SortableDataTableSteps extends Context {
+
 
 	 HomePageElements home;
 	 SortableDataTableElements sortableElemenets;
@@ -45,39 +47,52 @@ public class SortableDataTableSteps extends Context {
 	    // Iterating over the table data
 	    
 	    for (int i = 0; i < rows.size(); i++) {
-            WebElement row = rows.get(i);
-            String lastName = row.findElement(By.xpath("//*[@id='table1']/tbody/tr[" + (i+1) + "]/td[1]")).getText();
-            String firstName = row.findElement(By.xpath("//*[@id='table1']/tbody/tr[" + (i+1) + "]/td[2]")).getText();
-            String email = row.findElement(By.xpath("//*[@id='table1']/tbody/tr[" + (i+1) + "]/td[3]")).getText();
-            String due = row.findElement(By.xpath("//*[@id='table1']/tbody/tr[" + (i+1) + "]/td[4]")).getText();
-            String website = row.findElement(By.xpath("//*[@id='table1']/tbody/tr[" + (i+1) + "]/td[5]")).getText();
+           WebElement row = rows.get(i);
+           String lastName = row.findElement(By.xpath("//*[@id='table1']/tbody/tr[" + (i+1) + "]/td[1]")).getText();
+           String firstName = row.findElement(By.xpath("//*[@id='table1']/tbody/tr[" + (i+1) + "]/td[2]")).getText();
+           String email = row.findElement(By.xpath("//*[@id='table1']/tbody/tr[" + (i+1) + "]/td[3]")).getText();
+           String due = row.findElement(By.xpath("//*[@id='table1']/tbody/tr[" + (i+1) + "]/td[4]")).getText();
+           String website = row.findElement(By.xpath("//*[@id='table1']/tbody/tr[" + (i+1) + "]/td[5]")).getText();
 
-            // Creating a map of the actual data 
-            Map<String, String> actualData = Map.of(
-                "Last Name", lastName,
-                "First Name", firstName,
-                "Email", email,
-                "Due", due,
-                "Web Site", website
-            );
-            
-            // Getting the expected data for comparison
-            Map<String, String> expectedData = expectedTable.get(i);
+           // Creating a map of the actual data 
+           Map<String, String> actualData = new HashMap<>();
+           
+              actualData.put( "Last Name", lastName);
+              actualData.put( "First Name", firstName);
+              actualData.put("Email", email);
+              actualData.put("Due", due);
+              actualData.put("Web Site", website);
+           
+           // Getting the expected data for comparison
+           Map<String, String> expectedData = expectedTable.get(i);
 
-            // Comparision of  the actual dataTable with the expected dataTable
-            Assertions.assertEquals(expectedData.get("Last Name").trim(), actualData.get("Last Name"), 
-                    "The customer information does not align for the row. " + (i + 1) + " - Last Name mismatch");
-                Assertions.assertEquals(expectedData.get("First Name").trim(), actualData.get("First Name"), 
-                    "The customer information does not align for the row. " + (i + 1) + " - First Name mismatch");
-                Assertions.assertEquals(expectedData.get("Email").trim(), actualData.get("Email"), 
-                    "The customer information does not align for the row. " + (i + 1) + " - Email mismatch");
-                Assertions.assertEquals(expectedData.get("Due").trim(), actualData.get("Due"), 
-                    "The customer information does not align for the row. " + (i + 1) + " - Due mismatch");
-                Assertions.assertEquals(expectedData.get("Web Site").trim(), actualData.get("Web Site"), 
-                    "The customer information does not align for the row." + (i + 1) + " - Web Site mismatch");
+           // Comparision of  the actual dataTable with the expected dataTable
+           Assertions.assertEquals(expectedData.get("Last Name").trim(), actualData.get("Last Name"), 
+                   "The table info does not align for the row " + (i + 1));
+               Assertions.assertEquals(expectedData.get("First Name").trim(), actualData.get("First Name"), 
+                   "The table info does not align for the row " + (i + 1));
+               Assertions.assertEquals(expectedData.get("Email").trim(), actualData.get("Email"), 
+                   "The table info does not align for the row " + (i + 1));
+               Assertions.assertEquals(expectedData.get("Due").trim(), actualData.get("Due"), 
+                   "The table info does not align for the row " + (i + 1));
+               Assertions.assertEquals(expectedData.get("Web Site").trim(), actualData.get("Web Site"), 
+                   "The table infon does not align for the row " + (i + 1));
 	    
 	   
 	                System.out.println("Test Passed for: " + lastName + " " + firstName);
 	            }
 	        }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
